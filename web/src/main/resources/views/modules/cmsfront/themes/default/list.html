@@ -1,0 +1,132 @@
+<!--HTML-->
+<% layout('/modules/cmsfront/themes/layouts/default.html', {title: '列表页面', libs: ['fileupload']}){ %>
+<style>
+	.pagination li{
+		display: inline-block;
+	}
+
+	.pagination{
+		margin: 8px 0;
+		font-size: 13px;
+	}
+	.pagination .controls {
+		float: left;
+		border: 0;
+		padding: 7px 0 0 15px;
+		color: #777;
+	}
+	.pagination .controls input {
+		border: 0;
+		width: 22px;
+		padding: 0;
+		margin: -3px 0 0 0;
+		text-align: center;
+		font-size: 13px;
+		background: transparent;
+		box-shadow: none;
+	}
+	.pagination>.disabled>span, .pagination>.disabled>span:hover, .pagination>.disabled>span:focus, .pagination>.disabled>a, .pagination>.disabled>a:hover, .pagination>.disabled>a:focus {
+		cursor: default!important;
+		color: #ccc;
+	}
+</style>
+<!-- 栏目图 -->
+<div class="HIST-item-image">
+	<img src="${category.image}" style="border: none;width: 100%;"/>
+</div>
+<!-- 通知公告 新闻动态-->
+<div class="main">
+	<div class="container">
+		<div class="news-head" style="justify-content: flex-end;">
+			<div class="head-right" style="display:flex;">
+				<a class="lang-change" href="${ctx}/index-main.html">${i18n('home')}</a>
+				<a class="categoryCn" href="${ctx}/list-${category.categoryCode}?lang=zh_CN">${category.categoryName}</a>
+				<a class="categoryEn" href="${ctx}/list-${category.categoryCode}?lang=en_US">${category.categoryEnName}</a>
+			</div>
+		</div>
+		<div class="main-content" style="display: flex;">
+			<div class="content-left">
+				<h2 class="categoryCn">${category.categoryName}</h2>
+				<h2 class="categoryEn">${category.categoryEnName}</h2>
+<!--				<h2>NEWS INFORMATION</h2>-->
+				<div class="year-list">
+					<ul class="categoryCn">
+						<#html:foreach items="${childList}" var="c">
+							<li class="${c.categoryCode == createYear ? 'year-active' : ''}" onclick="yearClick('${c.categoryCode}')">${c.categoryName}</li>
+						</#html:foreach>
+					</ul>
+					<ul class="categoryEn">
+						<#html:foreach items="${childList}" var="c">
+							<li class="${c.categoryCode == createYear ? 'year-active' : ''}" onclick="yearClick('${c.categoryCode}')">${c.categoryEnName}</li>
+						</#html:foreach>
+					</ul>
+				</div>
+			</div>
+			<div class="content-list">
+				<#html:foreach items="${page.list}" var="article,status">
+					<div class="cont-item">
+						<div class="item-time">
+							<div class="time-top">${article.updateDate,'MM/dd'}</div>
+							<div class="time-bottom">${article.updateDate,'yyyy'}</div>
+						</div>
+						<a href="${article.url}" class="lang-change item-msg">
+							<h3 style="color:${article.color}">${abbr(article.title,28)}</h3>
+							<p>${abbr(article.articleData.content,156)}</p>
+						</a>
+						<a href="${article.url}" class="lang-change item-icon">+</a>
+					</div>
+				</#html:foreach>
+				<div id="pagination"></div>
+
+				<script>
+					var pageNo = ${page.pageNo};
+					var count = ${page.count};
+					var pageSize = ${page.pageSize};
+					var htmlLan = "zh_CN";
+					var urlLan = getUrlParam("lang");
+					if(urlLan!=null&&urlLan!=''){
+						htmlLan = urlLan
+						console.log(htmlLan)
+					}
+
+					function getUrlParam(name) {
+						var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+						var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+						if (r != null) return unescape(r[2]); return null; //返回参数值
+					}
+					function yearClick(year){
+						location = "${ctx}/list-${category.categoryCode}?createYear="+year+"&lang="+htmlLan;
+					}
+
+					layui.use('laypage', function(){
+						var laypage = layui.laypage;
+						//执行一个laypage实例
+						laypage.render({
+							elem: 'pagination', //注意，这里的 test1 是 ID，不用加 # 号
+							count: count,//数据总数，从服务端得到
+							limit: pageSize,
+							curr: pageNo,
+							layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+							limits: [5,10,15,20],
+							jump: function(obj, first){
+								//obj包含了当前分页的所有参数，比如：
+								if(!first){
+									location="${ctx}/list-${category.categoryCode}?pageNo="+obj.curr+"&pageSize="+obj.limit;
+									console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+									console.log(obj.limit); //得到每页显示的条数
+									// window.location.href = location
+								}
+							}
+						});
+					});
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<% } %>
+

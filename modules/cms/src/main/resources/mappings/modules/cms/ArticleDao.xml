@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeesite.modules.cms.dao.ArticleDao">
+	
+	
+	<select id="findList" resultType="Article">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		left join js_cms_category b on a.category_code = b.category_code
+		<where>
+			${sqlMap.where.toSql()}
+			<if test=" siteCode!=null and siteCode!='' ">
+				and b.site_code =#{siteCode}
+			</if>
+			<if test=" keywords!=null and keywords!='' ">
+				and a.keywords like concat('%', #{keywords}, '%')
+			</if>
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select>
+
+	<select id="searchList" resultType="Article">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			a.status=0
+			<if test=" keywords!=null and keywords!='' ">
+				and a.keywords like concat('%', #{keywords}, '%')
+			</if>
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select>
+
+
+
+	<update id="updateExpiredWeight">
+		update js_cms_article SET
+			 weight = 0
+		WHERE weight &gt; 0 AND weight_date &lt; 
+				<if test="dbName == 'oracle'">sysdate</if>
+				<if test="dbName == 'mssql'">getdate()</if>
+				<if test="dbName == 'mysql'">sysdate()</if>
+	</update>
+	
+	<update id="updateHitsAddOne">
+		update js_cms_article set
+			 hits = hits+1
+		 WHERE id = #{id}
+	</update>
+</mapper>

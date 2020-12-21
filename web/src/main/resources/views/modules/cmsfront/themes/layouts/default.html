@@ -1,0 +1,18 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved. */
+/*
+ * 默认布局文件
+ * @param title 页面标题
+ * @param bodyClass body标签的class内容
+ * @param libs 要引用的js或css类库
+ */
+var themeName = 'default';
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<% include('/modules/cmsfront/themes/include/head.html', {title: text(title!)}){} %>
+</head>
+<% include('/modules/cmsfront/themes/'+themeName+'/include/header.html', {libs: libs!}){} %>
+${layoutContent}
+<% include('/modules/cmsfront/themes/'+themeName+'/include/footer.html', {libs: libs!}){} %>
+<% include('/modules/cmsfront/themes/include/foot.html', {title: text(title!)}){} %>

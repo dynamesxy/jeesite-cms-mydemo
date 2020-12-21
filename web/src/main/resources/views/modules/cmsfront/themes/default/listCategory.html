@@ -1,0 +1,72 @@
+<!--HTML-->
+<% layout('/modules/cmsfront/themes/layouts/default.html', {title: '列表页面', libs: []}){ %>
+<!-- 栏目图 -->
+<div class="HIST-item-image">
+    <img src="${category.image}" style="border: none;width: 100%;"/>
+</div>
+<!-- 通知公告 新闻动态-->
+<div class="main">
+    <div class="container">
+        <div class="news-head" style="justify-content: flex-end;">
+
+            <div class="head-right" style="display:flex;">
+                <a class="lang-change" href="${ctx}/index-main.html">${i18n('home')}</a>
+                <a class="categoryCn" href="${ctx}/list-${category.categoryCode}?lang=zh_CN">${category.categoryName}</a>
+                <a class="categoryEn" href="${ctx}/list-${category.categoryCode}?lang=en_US">${category.categoryEnName}</a>
+            </div>
+        </div>
+        <div class="main-content" style="display: flex;">
+            <div class="content-left">
+                <h2 class="categoryCn">${category.categoryName}</h2>
+                <h2 class="categoryEn">${category.categoryEnName}</h2>
+                <div class="year-list">
+                    <ul class="categoryCn">
+                        <#html:foreach items="${childList}" var="c">
+                            <li class="${c.categoryCode == createYear ? 'year-active' : ''}" onclick="yearClick('${c.categoryCode}')">${c.categoryName}</li>
+                        </#html:foreach>
+                    </ul>
+                    <ul class="categoryEn">
+                        <#html:foreach items="${childList}" var="c">
+                            <li class="${c.categoryCode == createYear ? 'year-active' : ''}" onclick="yearClick('${c.categoryCode}')">${c.categoryEnName}</li>
+                        </#html:foreach>
+                    </ul>
+                </div>
+            </div>
+            <div class="content-list">
+                <div class="notice">
+<!--                    <h1>${listArticle.title}</h1>-->
+<!--                    <h3>摘要：${listArticle.description}</h3>-->
+                    <div class="notice-cont">
+                        ${listArticle.articleData.content}
+                    </div>
+                </div>
+
+                <script>
+                    var htmlLan = "zh_CN";
+                    var urlLan = getUrlParam("lang");
+                    if(urlLan!=null&&urlLan!=''){
+                        htmlLan = urlLan
+                        console.log(htmlLan)
+                    }
+
+                    function getUrlParam(name) {
+                        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                        if (r != null) return unescape(r[2]); return null; //返回参数值
+                    }
+
+                    function yearClick(year){
+                        location = "${ctx}/list-${category.categoryCode}?createYear="+year+"&lang="+htmlLan;
+                    }
+
+
+                </script>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<% } %>

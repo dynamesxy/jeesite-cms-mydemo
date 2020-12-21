@@ -1,0 +1,138 @@
+<!--HTML-->
+<% layout('/modules/cmsfront/themes/layouts/default.html', {title:site.siteName+'-首页',libs: []}){ %>
+<!-- 轮播图 -->
+<div class="layui-carousel" id="test1">
+	<div carousel-item>
+		<#html:foreach items="${imageUrlList}" var="c">
+			<div><img src="${c}" style="width:100%; height: 459px;"/></div>
+		</#html:foreach>
+	</div>
+</div>
+<!-- 通知公告 新闻动态-->
+<div class="HIST-card">
+	<div class="layui-card" style="margin: 30px 20% 0 20%;">
+		<#html:foreach items="${categoryList(site.siteCode, '0', 16,'A1021','')}" var="category,status">
+			<div class="layui-card-header" style="background-color: #3198B4; color: white;">
+				<p style="display: inline; font-size: 20px;">${i18n('noticeTitle')}</p>
+				<a class="lang-change" href="${ctx+'/list-'+ category.categoryCode}" style="color: white;float: right;font-size: 15px;">${i18n('indexMore')}<i class="layui-icon layui-icon-right" style="font-size: 15px; color: white;"></i> </a>
+			</div>
+			<div class="layui-card-body layui-row">
+				<div class="layui-col-md6">
+					<img src="${category.indexImage}" style="width: 95%;"/>
+				</div>
+				<div class="layui-col-md6">
+					<#html:foreach items="${articleList(site.siteCode,category.categoryCode,5)}" var="article,status">
+						<div class="HIST-card-notices">
+							<p class="HIST-card-news-p"><a class="lang-change" href="${article.url}" style="color:${article.color}">${abbr(article.title,28)}</a></p>
+							<p class="HIST-card-news-time-p">${article.updateDate,'yyyy-MM-dd'}</p>
+						</div>
+						<hr class="layui-bg-gray" style="width: 95%;float: right;">
+					</#html:foreach>
+				</div>
+			</div>
+		</#html:foreach>
+	</div>
+
+	<div class="layui-card" style="margin: 30px 20% 0 20%;">
+		<#html:foreach items="${categoryList(site.siteCode, '0', 16,'A1009','')}" var="category,status">
+			<div class="layui-card-header" style="background-color: #47AFA1; color: white;">
+				<p style="display: inline; font-size: 20px;">${i18n('indexNews')}</p>
+				<a class="lang-change" href="${ctx+'/list-'+ category.categoryCode}" style="color: white;float: right;font-size: 15px;">${i18n('indexMore')}<i class="layui-icon layui-icon-right" style="font-size: 15px; color: white;"></i> </a>
+			</div>
+			<div class="layui-card-body layui-row">
+				<div class="layui-col-md6">
+					<#html:foreach items="${articleList(site.siteCode,category.categoryCode,5)}" var="article,status">
+						<div class="HIST-card-news">
+							<p class="HIST-card-news-p"><a class="lang-change" href="${article.url}" style="color:${article.color}">${abbr(article.title,28)}</a></p>
+							<p class="HIST-card-news-time-p">${article.updateDate,'yyyy-MM-dd'}</p>
+						</div>
+						<hr class="layui-bg-gray" style="width: 95%;float: left;">
+					</#html:foreach>
+				</div>
+				<div class="layui-col-md6">
+					<img src="${category.indexImage}" style="width: 95%;float: right;"/>
+				</div>
+			</div>
+		</#html:foreach>
+	</div>
+</div>
+<!-- 研究成果 -->
+<div class="HIST-result">
+	<div class="HIST-result-title">
+		<p style="display: inline;height: 100px;line-height: 100px;">
+			${i18n('indexResearch')}
+			<a class="lang-change" href="${ctx+'/list-A1014'}">
+				<img src="${ctxStatic}/modules/cmsfront/themes/myStatic/img/jiantou3-icon.png" style="width: 42px;margin-left: 10px;margin-top: -5px;"/>
+			</a>
+		</p>
+	</div>
+	<div class="HIST-result-card">
+		<div class=" HIST-card-style" style="background: rgba(22, 103, 208, 0.8);">
+			<div class="HIST-result-card-header" style="background-color: rgba(21, 84, 183, 0.6);">
+				<p style="height: 65px;line-height: 65px;">${i18n('zlyc')}</p>
+			</div>
+			<div class="result-header">
+				<img src="${zlycShow.image}"/>
+			</div>
+			<div class="result-body">
+				<h2>${abbr(zlycShow.title,48)}</h2>
+				<p>${abbr(zlycShow.description,138)}</p>
+			</div>
+		</div>
+		<div class=" HIST-card-style" style="background: rgba(21, 194, 216, 0.8);">
+			<div class="HIST-result-card-header" style="background: rgba(39, 191, 230, 0.6);">
+				<p style="height: 65px;line-height: 65px;">${i18n('whyc')}</p>
+			</div>
+			<div class="result-header">
+				<img src="${whycShow.image}" />
+			</div>
+			<div class="result-body">
+				<h2>${abbr(whycShow.title,48)}</h2>
+				<p>${abbr(whycShow.description,138)}</p>
+			</div>
+		</div>
+		<div class=" HIST-card-style" style="background: rgba(156, 190, 24, 0.8);">
+			<div class="HIST-result-card-header" style="background: rgba(158, 195, 23, 0.6);">
+				<p style="height: 65px;line-height: 65px;">${i18n('kjjs')}</p>
+			</div>
+			<div class="result-header">
+				<img src="${kjjsShow.image}"/>
+			</div>
+			<div class="result-body">
+				<h2>${abbr(kjjsShow.title,48)}</h2>
+				<p>${abbr(kjjsShow.description,138)}</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="HIST-link">
+	<div class="layui-card" style="margin: 30px 18.6% 0 17.7%;">
+		<div class="layui-card-header" style="background-color: #333333; color: white;padding: 0 25px;">
+			<p style="display: inline; font-size: 20px;">${i18n('indexLink')}</p>
+			<a class="lang-change" href="${ctx+'/list-A1022'}" style="color: white;float: right;font-size: 15px;">${i18n('indexMore')}<i class="layui-icon layui-icon-right" style="font-size: 15px; color: white;"></i></a>
+		</div>
+		<div class="layui-card-body" style="position: relative;padding: 10px 0px;">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<#html:foreach items="${articleList(site.siteCode,'A1022',20)}" var="article,status">
+						<div class="swiper-slide"><a href="${article.href}"><img src="${article.image}" style="width: 155px;"/></a></div>
+					</#html:foreach>
+				</div>
+				<div class="swiper-button-prev" ></div>
+				<div class="swiper-button-next" ></div>
+			</div>
+			<script>
+				var swiper = new Swiper('.swiper-container', {
+					loop: false,
+					slidesPerView:5,
+					spaceBetween: 30,
+					nextButton: '.swiper-button-next',
+					prevButton: '.swiper-button-prev',
+				});
+			</script>
+		</div>
+	</div>
+</div>
+
+<% } %>

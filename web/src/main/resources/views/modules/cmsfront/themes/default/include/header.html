@@ -1,0 +1,81 @@
+<!--HTML-->
+<% include('${ctxStatic}/modules/cmsfront/themes/include/csslibs.html', {libs: libs!}){} %>
+<link rel="stylesheet" href="${ctxStatic}/modules/cmsfront/themes/myStatic/layui-v2.5.7/layui/css/layui.css">
+<link rel="stylesheet" href="${ctxStatic}/modules/cmsfront/themes/myStatic/css/header.css" />
+<link rel="stylesheet" href="${ctxStatic}/modules/cmsfront/themes/myStatic/css/common.css" />
+<link rel="stylesheet" href="${ctxStatic}/modules/cmsfront/themes/myStatic/dist/css/swiper.min.css" />
+<script src="${ctxStatic}/modules/cmsfront/themes/myStatic/layui-v2.5.7/layui/layui.js"></script>
+<script src="${ctxStatic}/modules/cmsfront/themes/myStatic/dist/js/swiper.min.js"></script>
+<script src="${ctxStatic}/modules/cmsfront/themes/myStatic/js/new-js.js"></script>
+
+<div class="HIST-header">
+    <div class="HIST-header-main layui-row">
+        <div class="layui-col-md2" style="margin-top: 14px;width: 14%;">
+            <img class="header-logo" src="${site.logo}" />
+        </div>
+        <div id="logoName" class="HIST-header-title layui-col-md2">
+<!--            <p>${i18n('logoName')}</p>-->
+            <p class="categoryCn">${site.siteName}</p>
+            <p class="categoryEn">${site.siteEnName}</p>
+        </div>
+        <div class="layui-col-md8">
+            <div class="search-box">
+<!--                <div class="HIST-language">-->
+<!--                    <a class="lan-a" href="${ctx}/index-main.html?lang=en_US">EN</a>-->
+<!--                    <a class="lan-a" href="${ctx}/index-main.html?lang=zh_CN">CN</a>-->
+<!--                </div>-->
+<!--                <input class="HIST-search" />-->
+<!--                <img src="${ctxStatic}/modules/cmsfront/themes/myStatic/img/sousuo.png" style="position: absolute;right: 70px;top: 20px;"/>-->
+                <div class="HIST-search">
+                    <input id="searchInput" type="text" placeholder="Search"/>
+                    <img id="searchBtn" src="${ctxStatic}/modules/cmsfront/themes/myStatic/img/sousuo.png">
+                </div>
+                <script>
+                    var htmlLan = "zh_CN";
+                    // console.log("adsd:",htmlLan)
+                    var urlLan = getUrlParam("lang");
+                    if(urlLan!=null&&urlLan!=''){
+                        htmlLan = urlLan
+                        console.log(htmlLan)
+                    }
+                    function getUrlParam(name) {
+                        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                        if (r != null) return unescape(r[2]); return null; //返回参数值
+                    }
+                    $("#searchInput").on('keypress',function(event){
+                        if(event.keyCode == 13){
+                            var q = $('#searchInput').val();
+                            location = "${ctx}/search?q="+q+"&lang="+htmlLan+"&siteCode=${site.siteCode}";
+                        }
+                    });
+
+                    $("#searchBtn").click(function (){
+                        var q = $('#searchInput').val();
+                        location = "${ctx}/search?q="+q+"&lang="+htmlLan+"&siteCode=${site.siteCode}";
+                    })
+                </script>
+                <div class="HIST-language">
+                    <a id="enLan" href="${ctx}/index-main.html?lang=en_US">EN</a>
+                    <a id="cnLan" href="${ctx}/index-main.html?lang=zh_CN">CN</a>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-top: 7px;">
+                <ul class="layui-nav categoryCn" lay-filter="" style="float: right;">
+                    <#html:foreach items="${site.categoryList}" var="c">
+                        <li class="layui-nav-item ${category.categoryName == '首页'&&c.categoryName == '首页' ? 'layui-this' : (c.categoryCode == category.categoryCode ? 'layui-this' : '')}"><a
+                                href="${c.categoryName == '首页' ?  ctx+'?lang=zh_CN': ctx+'/list-'+ c.categoryCode+'?lang=zh_CN'}">${c.categoryName}</a></li>
+                    </#html:foreach>
+                </ul>
+                <ul class="layui-nav categoryEn" lay-filter="" style="float: right;">
+                    <#html:foreach items="${site.categoryList}" var="c">
+                        <li class="layui-nav-item ${category.categoryName == '首页'&&c.categoryName == '首页' ? 'layui-this' : (c.categoryCode == category.categoryCode ? 'layui-this' : '')}"><a
+                            href="${c.categoryName == '首页' ?  ctx+'?lang=en_US': ctx+'/list-'+ c.categoryCode+'?lang=en_US'}">${c.categoryEnName}</a></li>
+                    </#html:foreach>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+    
+       

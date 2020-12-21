@@ -1,0 +1,106 @@
+<!--HTML-->
+<% layout('/modules/cmsfront/themes/layouts/default.html', {title: '列表页面', libs: ['fileupload']}){ %>
+<!-- 栏目图 -->
+<div class="HIST-item-image">
+    <img src="${category.image}" style="border: none;width: 100%;"/>
+</div>
+<!-- 通知公告 新闻动态-->
+<div class="main">
+        <div class="container">
+            <input type="radio" name="news" id="news1" onclick="goNew('A1009')">
+            <input type="radio" name="news" id="news2" checked="">
+            <div class="news-head">
+                <div class="head-left">
+                    <label class="btn" for="news1">${i18n('newCenter')}</label>
+                    <label class="btn" for="news2" checked>${i18n('work')}</label>
+                </div>
+                <div class="head-right" style="display: flex;">
+                    <a class="lang-change" href="${ctx}/index-main.html">${i18n('home')}</a>
+                    <a href="javascript:void(0);">${i18n('news')}</a>
+                    <a href="javascript:void(0);">${i18n('work')}</a>
+                </div>
+            </div>
+            <div class="main-content" style="display: flex;">
+                <div class="content-left">
+                    <h2 class="categoryCn">${category.categoryName}</h2>
+                    <h2 class="categoryEn">${category.categoryEnName}</h2>
+                    <!--			<h2>WORKING CONDITION</h2>-->
+                    <div class="year-list">
+                        <h4>${i18n('year')}</h4>
+                        <ul>
+                            <#html:foreach items="${yearList}" var="c">
+                            <li class="${c == createYear ? 'year-active' : ''}" onclick="yearClick('${c}')">${c}</li>
+                        </#html:foreach>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-list">
+                    <div class="work-list">
+                        <#html:foreach items="${page.list}" var="article,status">
+                            <a onclick="pdfClick('${article.pdf}')" id="pdfClick" href="javascript:void(0);"><img src="${article.image}" ></a>
+                        </#html:foreach>
+                    </div>
+                    <div id="pagination"></div>
+                <script type="text/javascript" src="${ctxStatic}/modules/cmsfront/themes/myStatic/pdfjs-2.5.207-dist/build/pdf.js"></script>
+                <script>
+                    var pageNo = ${page.pageNo};
+                    var count = ${page.count};
+                    var pageSize = ${page.pageSize};
+
+                    var htmlLan = "zh_CN";
+                    var urlLan = getUrlParam("lang");
+                    if(urlLan!=null&&urlLan!=''){
+                        htmlLan = urlLan
+                        console.log(htmlLan)
+                    }
+
+                    function getUrlParam(name) {
+                        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                        if (r != null) return unescape(r[2]); return null; //返回参数值
+                    }
+
+                    function goNew(code){
+                        location = "${ctx}/list-"+code+"?lang="+htmlLan;
+                    }
+
+                    function yearClick(year){
+                        location = "${ctx}/list-${category.categoryCode}?createYear="+year+"&lang="+htmlLan;
+                    }
+
+                    function pdfClick(url){
+                        window.open("${ctxStatic}/modules/cmsfront/themes/myStatic/pdfjs-2.5.207-dist/web/viewer.html?file="+encodeURIComponent(url), "_blank");
+                    }
+
+                    layui.use('laypage', function(){
+                        var laypage = layui.laypage;
+                        //执行一个laypage实例
+                        laypage.render({
+                            elem: 'pagination', //注意，这里的 test1 是 ID，不用加 # 号
+                            count: count,//数据总数，从服务端得到
+                            limit: pageSize,
+                            curr: pageNo,
+                            layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+                            limits: [5,10,15,20],
+                            jump: function(obj, first){
+                                //obj包含了当前分页的所有参数，比如：
+                                if(!first){
+                                    location="${ctx}/list-${category.categoryCode}?pageNo="+obj.curr+"&pageSize="+obj.limit;
+                                    console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                                    console.log(obj.limit); //得到每页显示的条数
+                                    // window.location.href = location
+                                }
+                            }
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<% } %>
+

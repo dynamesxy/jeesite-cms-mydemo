@@ -1,0 +1,23 @@
+<!--HTML-->
+<% layout('/modules/cmsfront/themes/layouts/default.html', {title:'文章查看',libs: []}){ %>
+<!-- 通知公告 新闻动态-->
+<div class="main">
+	<div class="container">
+		<div class="news-head" style="justify-content: flex-end;">
+
+			<div class="head-right" style="display:flex;">
+				<a class="lang-change" href="${ctx}/index-main.html">${i18n('home')}</a>
+				<a class="categoryCn" href="${ctx}/list-${category.categoryCode}?lang=zh_CN">${category.categoryName}</a>
+				<a class="categoryEn" href="${ctx}/list-${category.categoryCode}?lang=en_US">${category.categoryEnName}</a>
+			</div>
+		</div>
+		<div class="notice">
+			<h1>${article.title}</h1>
+			<h3>${i18n('description')}：${article.description}</h3>
+			<div class="notice-cont">
+				${article.articleData.content}
+			</div>
+		</div>
+	</div>
+</div>
+<% } %>

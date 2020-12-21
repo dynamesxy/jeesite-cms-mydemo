@@ -1,0 +1,57 @@
+<% layout('/layouts/default.html', {title: '栏目与角色关联表管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('栏目与角色关联表管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('cms:categoryRole:edit')){ %>
+					<a href="${ctx}/cms/categoryRole/form" class="btn btn-default btnTool" title="${text('新增栏目与角色关联表')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${categoryRole}" action="${ctx}/cms/categoryRole/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('控制类型')}：</label>
+					<div class="control-inline">
+						<#form:input path="ctrlType" maxlength="32" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text('控制类型')}', name:'ctrlType', index:'a.ctrl_type', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/cms/categoryRole/form?categoryCode='+row.categoryCode+'&roleCode='+row.roleCode+'" class="btnList" data-title="${text('编辑栏目与角色关联表')}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('cms:categoryRole:edit')){ %>
+				actions.push('<a href="${ctx}/cms/categoryRole/form?categoryCode='+row.categoryCode+'&roleCode='+row.roleCode+'" class="btnList" title="${text('编辑栏目与角色关联表')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/cms/categoryRole/delete?categoryCode='+row.categoryCode+'&roleCode='+row.roleCode+'" class="btnList" title="${text('删除栏目与角色关联表')}" data-confirm="${text('确认要删除该栏目与角色关联表吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>
