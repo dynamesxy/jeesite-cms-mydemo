@@ -139,7 +139,7 @@ public class ArticleController extends BaseController {
 			article.setStatus(Article.STATUS_DRAFT);
 		}
 		model.addAttribute("contentViewList", fileTempleteService.getTempleteContentDict(Article.DEFAULT_TEMPLATE));
-		//model.addAttribute("contentViewList", fileTempleteService.getTempleteContentDict(Site.TEMPLETE_BASE_DIRECTION + "/" + "default"));
+//		model.addAttribute("contentViewList", fileTempleteService.getTempleteContentDict(Site.TEMPLETE_BASE_DIRECTION + "/" + "default"));
 		model.addAttribute("article_DEFAULT_TEMPLATE", Article.DEFAULT_TEMPLATE);
 		model.addAttribute("article", article);
 		CmsUtils.addViewConfigAttribute(model, article.getCategory());

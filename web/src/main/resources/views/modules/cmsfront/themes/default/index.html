@@ -23,8 +23,11 @@
 				<div class="layui-col-md6">
 					<#html:foreach items="${articleList(site.siteCode,category.categoryCode,5)}" var="article,status">
 						<div class="HIST-card-notices">
-							<p class="HIST-card-news-p"><a class="lang-change" href="${article.url}" style="color:${article.color}">${abbr(article.title,28)}</a></p>
-							<p class="HIST-card-news-time-p">${article.updateDate,'yyyy-MM-dd'}</p>
+							<p class="HIST-card-news-p">
+								<a class="lang-change categoryCn" href="${article.url}" style="color:${article.color}">${abbr(article.title,48)}</a>
+								<a class="lang-change categoryEn" href="${article.url}" style="color:${article.color}">${abbr(article.titleEn,48)}</a>
+							</p>
+							<p class="HIST-card-news-time-p">${article.createDate,'yyyy-MM-dd'}</p>
 						</div>
 						<hr class="layui-bg-gray" style="width: 95%;float: right;">
 					</#html:foreach>
@@ -43,8 +46,11 @@
 				<div class="layui-col-md6">
 					<#html:foreach items="${articleList(site.siteCode,category.categoryCode,5)}" var="article,status">
 						<div class="HIST-card-news">
-							<p class="HIST-card-news-p"><a class="lang-change" href="${article.url}" style="color:${article.color}">${abbr(article.title,28)}</a></p>
-							<p class="HIST-card-news-time-p">${article.updateDate,'yyyy-MM-dd'}</p>
+							<p class="HIST-card-news-p">
+								<a class="lang-change categoryCn" href="${article.url}" style="color:${article.color}">${abbr(article.title,48)}</a>
+								<a class="lang-change categoryEn" href="${article.url}" style="color:${article.color}">${abbr(article.titleEn,48)}</a>
+							</p>
+							<p class="HIST-card-news-time-p">${article.createDate,'yyyy-MM-dd'}</p>
 						</div>
 						<hr class="layui-bg-gray" style="width: 95%;float: left;">
 					</#html:foreach>
@@ -74,9 +80,13 @@
 			<div class="result-header">
 				<img src="${zlycShow.image}"/>
 			</div>
-			<div class="result-body">
+			<div class="result-body categoryCn">
 				<h2>${abbr(zlycShow.title,48)}</h2>
 				<p>${abbr(zlycShow.description,138)}</p>
+			</div>
+			<div class="result-body categoryEn">
+				<h2>${abbr(zlycShow.titleEn,48)}</h2>
+				<p>${abbr(zlycShow.descriptionEn,138)}</p>
 			</div>
 		</div>
 		<div class=" HIST-card-style" style="background: rgba(21, 194, 216, 0.8);">
@@ -86,9 +96,13 @@
 			<div class="result-header">
 				<img src="${whycShow.image}" />
 			</div>
-			<div class="result-body">
+			<div class="result-body categoryCn">
 				<h2>${abbr(whycShow.title,48)}</h2>
 				<p>${abbr(whycShow.description,138)}</p>
+			</div>
+			<div class="result-body categoryEn">
+				<h2>${abbr(whycShow.titleEn,48)}</h2>
+				<p>${abbr(whycShow.descriptionEn,138)}</p>
 			</div>
 		</div>
 		<div class=" HIST-card-style" style="background: rgba(156, 190, 24, 0.8);">
@@ -98,9 +112,13 @@
 			<div class="result-header">
 				<img src="${kjjsShow.image}"/>
 			</div>
-			<div class="result-body">
+			<div class="result-body categoryCn">
 				<h2>${abbr(kjjsShow.title,48)}</h2>
 				<p>${abbr(kjjsShow.description,138)}</p>
+			</div>
+			<div class="result-body categoryEn">
+				<h2>${abbr(kjjsShow.titleEn,48)}</h2>
+				<p>${abbr(kjjsShow.descriptionEn,138)}</p>
 			</div>
 		</div>
 	</div>
@@ -114,7 +132,7 @@
 		</div>
 		<div class="layui-card-body" style="position: relative;padding: 10px 0px;">
 			<div class="swiper-container">
-				<div class="swiper-wrapper">
+				<div class="swiper-wrapper" style="padding-left: 40px;">
 					<#html:foreach items="${articleList(site.siteCode,'A1022',20)}" var="article,status">
 						<div class="swiper-slide"><a href="${article.href}"><img src="${article.image}" style="width: 155px;"/></a></div>
 					</#html:foreach>
@@ -126,7 +144,7 @@
 				var swiper = new Swiper('.swiper-container', {
 					loop: false,
 					slidesPerView:5,
-					spaceBetween: 30,
+					spaceBetween: -30,
 					nextButton: '.swiper-button-next',
 					prevButton: '.swiper-button-prev',
 				});

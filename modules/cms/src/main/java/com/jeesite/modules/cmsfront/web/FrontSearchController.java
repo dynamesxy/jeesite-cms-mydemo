@@ -15,6 +15,7 @@ import com.jeesite.modules.cms.entity.ArticleData;
 import com.jeesite.modules.cms.entity.Category;
 import com.jeesite.modules.cms.service.CategoryService;
 import com.jeesite.modules.cms.service.SiteService;
+import com.jeesite.modules.cms.utils.VisitLogAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,6 +59,7 @@ public class FrontSearchController extends BaseController{
 	 * @param bd 最后更新日期范围开始
 	 * @param ed 最后更新日期范围结束
 	 */
+	@VisitLogAnnotation
 	@RequestMapping(value = "")
 	public String search(String t, String q, String qand, String qnot, String a, String bd,
 			String ed, String siteCode,@RequestParam(required = false, defaultValue = "1") Integer pageNo,

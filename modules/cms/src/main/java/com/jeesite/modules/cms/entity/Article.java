@@ -45,6 +45,9 @@ import com.jeesite.modules.cms.utils.CmsUtils;
 		@Column(name = "word_count", attrName = "wordCount", label = "字数", comment = "字数（不包含html）"),
 		@Column(name = "custom_content_view", attrName = "customContentView", label = "自定义内容视图"),
 		@Column(name = "view_config", attrName = "viewConfig", label = "视图配置"),
+		@Column(name = "keywords_en", attrName = "keywordsEn", label = "英文关键字", queryType = QueryType.LIKE),
+		@Column(name = "description_en", attrName = "descriptionEn", label = "英文描述", queryType = QueryType.LIKE),
+		@Column(name = "title_en", attrName = "titleEn", label = "英文标题", queryType = QueryType.LIKE),
 		@Column(includeEntity = DataEntity.class),
 		@Column(includeEntity = BaseEntity.class),
 	}, orderBy = "a.update_date DESC"
@@ -66,6 +69,9 @@ public class Article extends DataEntity<Article> {
 	private String copyfrom; 	// 文章来源出处
 	private Long hits; 			// 点击数
 	private String pdf;        //pdf
+	private String keywordsEn;  //英文关键字
+	private String descriptionEn;  //英文描述
+	private String titleEn;    //英文标题
 	
 	private Integer hitsPlus; 			// 支持数
 	private Integer hitsMinus; 			// 反对数
@@ -323,5 +329,29 @@ public class Article extends DataEntity<Article> {
 
 	public void setPdf(String pdf) {
 		this.pdf = pdf;
+	}
+
+	public String getKeywordsEn() {
+		return keywordsEn;
+	}
+
+	public void setKeywordsEn(String keywordsEn) {
+		this.keywordsEn = keywordsEn;
+	}
+
+	public String getDescriptionEn() {
+		return descriptionEn;
+	}
+
+	public void setDescriptionEn(String descriptionEn) {
+		this.descriptionEn = descriptionEn;
+	}
+
+	public String getTitleEn() {
+		return titleEn;
+	}
+
+	public void setTitleEn(String titleEn) {
+		this.titleEn = titleEn;
 	}
 }

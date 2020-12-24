@@ -66,12 +66,16 @@
 				<#html:foreach items="${page.list}" var="article,status">
 					<div class="cont-item">
 						<div class="item-time">
-							<div class="time-top">${article.updateDate,'MM/dd'}</div>
-							<div class="time-bottom">${article.updateDate,'yyyy'}</div>
+							<div class="time-top">${article.createDate,'MM/dd'}</div>
+							<div class="time-bottom">${article.createDate,'yyyy'}</div>
 						</div>
-						<a href="${article.url}" class="lang-change item-msg">
-							<h3 style="color:${article.color}">${abbr(article.title,28)}</h3>
-							<p>${abbr(article.articleData.content,156)}</p>
+						<a href="${article.url}" class="lang-change item-msg categoryCn">
+							<h3 style="color:${article.color}">${abbr(article.title,48)}</h3>
+							<p>${abbr(article.articleData.content,196)}</p>
+						</a>
+						<a href="${article.url}" class="lang-change item-msg categoryEn">
+							<h3 style="color:${article.color}">${abbr(article.titleEn,48)}</h3>
+							<p>${abbr(article.articleData.contentEn,196)}</p>
 						</a>
 						<a href="${article.url}" class="lang-change item-icon">+</a>
 					</div>

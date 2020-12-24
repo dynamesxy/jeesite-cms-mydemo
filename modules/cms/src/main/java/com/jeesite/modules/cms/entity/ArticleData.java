@@ -18,6 +18,7 @@ import com.jeesite.common.mybatis.annotation.Table;
 @Table(name = "${_prefix}cms_article_data", alias = "a", columns = {
 		@Column(name = "id", attrName = "id", label = "编号", isPK = true),
 		@Column(name = "content", attrName = "content", label = "文章内容"),
+		@Column(name = "content_en", attrName = "contentEn", label = "英文内容"),
 		@Column(name = "relation", attrName = "relation", label = "相关文章"),
 		@Column(name = "is_can_comment", attrName = "isCanComment", label = "是否允许评论"),
 		@Column(includeEntity = Extend.class, attrName = "extend"),
@@ -30,6 +31,8 @@ public class ArticleData extends DataEntity<ArticleData> {
 	private String relation; 		// 相关文章
 	private String isCanComment; 	// 是否允许评论
 	private Extend extend; 			// 扩展字段
+
+	private String contentEn;   //英文内容
 
 	public ArticleData() {
 		this(null);
@@ -73,4 +76,11 @@ public class ArticleData extends DataEntity<ArticleData> {
 		this.extend = extend;
 	}
 
+	public String getContentEn() {
+		return contentEn;
+	}
+
+	public void setContentEn(String contentEn) {
+		this.contentEn = contentEn;
+	}
 }

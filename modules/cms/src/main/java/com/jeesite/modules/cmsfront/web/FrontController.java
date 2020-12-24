@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.jeesite.common.shiro.realms.A;
 import com.jeesite.modules.cms.service.SiteService;
+import com.jeesite.modules.cms.utils.VisitLogAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -66,6 +67,7 @@ public class FrontController extends BaseController {
 	/**
 	 * 站点首页
 	 */
+	@VisitLogAnnotation()
 	@RequestMapping(value = { "index-{siteCode}", "index-{siteCode}.html" })
 	public String index(@PathVariable String siteCode, Model model) {
 		// 如果是主站，获取主站信息并进入主页
@@ -161,10 +163,11 @@ public class FrontController extends BaseController {
 	/**
 	 * 内容列表
 	 */
+	@VisitLogAnnotation()
 	@RequestMapping(value = { "list-{categoryCode}", "list-{categoryCode}.html" })
 	public String list(@PathVariable String categoryCode,@RequestParam(required = false, defaultValue = "2020") String createYear,
 			@RequestParam(required = false, defaultValue = "1") Integer pageNo,
-			@RequestParam(required = false, defaultValue = "30") Integer pageSize, Model model,
+			@RequestParam(required = false, defaultValue = "5") Integer pageSize, Model model,
 			HttpServletRequest request) {
 
 		// 获取栏目信息
@@ -393,6 +396,7 @@ public class FrontController extends BaseController {
 	/**
 	 * 显示内容
 	 */
+	@VisitLogAnnotation()
 	@RequestMapping(value = { "view-{categoryCode}-{contentId}", "view-{categoryCode}-{contentId}.html" })
 	public String view(@PathVariable String categoryCode, @PathVariable String contentId, Model model,
 			HttpServletRequest request) {

@@ -27,10 +27,10 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-6">
+					<div class="col-xs-6" style="display: none">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> ${text('来源')}：<i class="fa icon-question hide"></i></label>
+								<span class="required">*</span> ${text('来源')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:radio path="source" dictType="cms_source" class="form-control required" />
 							</div>
@@ -43,9 +43,9 @@
 							<label class="control-label col-sm-2" title="">
 								<span class="required ">*</span> ${text('内容标题')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-10">
+								<#form:input path="title" maxlength="255"  class="form-control text-ruler required"/>
 								<div class="input-group">
-									<#form:input path="title" maxlength="255"  class="form-control text-ruler required"/>
-									<span class="input-group-btn">
+									<span class="input-group-btn" style="display: none">
 										 <span class="input-group input-color " data-color-format="hex">
 											<span class="input-group-addon" style="border-radius:0;border-left:0;">
 												<i style="background-color:${isNotBlank(article.color)?article.color:'#ddd'};"></i>
@@ -54,6 +54,17 @@
 										</span>
 									</span>
 								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('英文内容标题')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:input path="titleEn" maxlength="255"  class="form-control text-ruler required"/>
 							</div>
 						</div>
 					</div>
@@ -71,7 +82,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-6">
+				<div class="col-xs-6" style="display: none">
 					<div class="form-group">
 						<label class="control-label col-sm-4" title="${text('数值越大排序越靠前，可设置权重过期时间')}。">
 							${text('权重/排序')}： <i class="fa icon-question"></i></label>
@@ -85,7 +96,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-6">
+				<div class="col-xs-6" style="display: none">
 					<div class="form-group">
 						<label class="control-label col-sm-4" title="${text('时间到期后，权重自动恢复为0，如果为空，则权重永不过期')}。">
 							${text('权重过期时间')}： <i class="fa icon-question"></i></label>
@@ -110,9 +121,29 @@
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="form-group">
-						<label class="control-label col-sm-1">${text('正文')}：</label>
+						<label class="control-label col-sm-1"><span class="required">*</span>${text('正文')}：</label>
 						<div class="col-sm-11">
 							<#form:ueditor name="content" path="articleData.content" maxlength="10000" height="500" class="required" simpleToolbars="false" readonly="false" outline="false"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label class="control-label col-sm-1">${text('英文摘要')}：</label>
+						<div class="col-sm-11">
+							<#form:textarea path="descriptionEn" maxlength="500" class="form-control"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label class="control-label col-sm-1"><span class="required">*</span>${text('英文正文')}：</label>
+						<div class="col-sm-11">
+							<#form:ueditor name="content" path="articleData.contentEn" maxlength="10000" height="500" class="required" simpleToolbars="false" readonly="false" outline="false"/>
 						</div>
 					</div>
 				</div>
@@ -157,7 +188,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-6">
+				<div class="col-xs-6" style="display: none">
 					<div class="form-group">
 						<label class="control-label col-sm-4">${text('推荐位')}：</label>
 						<div class="col-sm-8">
@@ -179,7 +210,7 @@
 				</div>
 				<div class="col-xs-6">
 					<div class="form-group">
-						<label class="control-label col-sm-4" title="${text('可修改发布时间，不填则使用当前时间')}">
+						<label class="control-label col-sm-4" title="${text('不可修改发布时间')}">
 							${text('发布时间')}： <i class="fa icon-question"></i></label>
 						<div class="col-sm-8">
 							<#form:input path="createDate" readonly="true" maxlength="20" class="form-control Wdate"
@@ -200,7 +231,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" style="display: none">
 				<div class="col-xs-12">
 					<div class="form-group">
 						<label class="control-label col-sm-2" title="">
